@@ -35,5 +35,9 @@
     },
     "fileInfos": []
   },
+  "arguments": {
+    "input": [],
+    "output": []
+  },
   "expressionLanguage": "VisualBasic"
 }
