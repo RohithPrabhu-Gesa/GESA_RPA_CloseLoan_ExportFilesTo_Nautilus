@@ -210,6 +210,7 @@
                           <InArgument x:TypeArguments="ui:Browser" x:Key="in_CadenceBrowser">[CadenceBrwsr]</InArgument>
                           <InArgument x:TypeArguments="x:String" x:Key="in_HostName">[HostName]</InArgument>
                           <InArgument x:TypeArguments="s:DateTime" x:Key="in_ProcessStartTime">[ProcessStartTime]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_FilePath">[SaveToFolderPath]</InArgument>
                         </ui:InvokeWorkflowFile.Arguments>
                       </ui:InvokeWorkflowFile>
                     </Sequence>

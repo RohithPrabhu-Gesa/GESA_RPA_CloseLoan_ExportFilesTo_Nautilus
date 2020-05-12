@@ -5,6 +5,7 @@
     <x:Property Name="in_CadenceBrowser" Type="InArgument(ui:Browser)" />
     <x:Property Name="in_HostName" Type="InArgument(x:String)" />
     <x:Property Name="in_ProcessStartTime" Type="InArgument(s:DateTime)" />
+    <x:Property Name="in_FilePath" Type="InArgument(x:String)" />
   </x:Members>
   <this:ProcessTransaction.in_HostName>
     <InArgument x:TypeArguments="x:String" />
@@ -15,7 +16,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>817,2665</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>817,2796</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="21">
@@ -65,7 +66,7 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Description: In this file all other process specific files will be invoked. If an application exception occurs, the current transaction can be retried. If a BRE is thrown, the transaction will be skipped. Can be a flowchart or sequence. " DisplayName="ProcessTransaction" sap:VirtualizedContainerService.HintSize="797,2605" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Description: In this file all other process specific files will be invoked. If an application exception occurs, the current transaction can be retried. If a BRE is thrown, the transaction will be skipped. Can be a flowchart or sequence. " DisplayName="ProcessTransaction" sap:VirtualizedContainerService.HintSize="797,2736" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="LoanNumber" />
       <Variable x:TypeArguments="x:String" Name="RequestedBy" />
@@ -199,10 +200,11 @@
       <ui:InvokeWorkflowFile.Arguments>
         <OutArgument x:TypeArguments="x:Boolean" x:Key="out_IsPDFDownloaded">[IsDownloadSuccessful]</OutArgument>
         <OutArgument x:TypeArguments="x:String" x:Key="out_DownloadedFilePath">[DownloadedFilePath]</OutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[Environment.CurrentDirectory+"\Test"]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_FilePath]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_FileName">[If(String.IsNullOrEmpty(LastName),FirstName,LastName)+" "+LoanNumber+" Full File.pdf"]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="755,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Is Download Successful : &quot;+IsDownloadSuccessful.ToString]" />
     <If Condition="[IsDownloadSuccessful]" DisplayName="If downloaded successfully" sap:VirtualizedContainerService.HintSize="755,389" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SQL_ProcessingUpdate workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="SQL\SQL_ProcessingUpdate.xaml">
