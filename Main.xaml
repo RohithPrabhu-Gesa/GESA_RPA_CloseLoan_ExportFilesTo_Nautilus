@@ -619,7 +619,7 @@
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
                           <Transition.To>
-                            <State x:Name="__ReferenceID1" sap2010:Annotation.AnnotationText="Process stops here" DisplayName="End Process" sap:VirtualizedContainerService.HintSize="144,89" sap2010:WorkflowViewState.IdRef="State_1" IsFinal="True">
+                            <State x:Name="__ReferenceID1" sap2010:Annotation.AnnotationText="Process stops here" DisplayName="End Process" sap:VirtualizedContainerService.HintSize="484,673" sap2010:WorkflowViewState.IdRef="State_1" IsFinal="True">
                               <State.Entry>
                                 <TryCatch sap:VirtualizedContainerService.HintSize="438,533" sap2010:WorkflowViewState.IdRef="TryCatch_4">
                                   <TryCatch.Try>
@@ -638,8 +638,7 @@
                                         <ui:InvokeWorkflowFile.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="in_RequestedBy">[RequestedBy]</InArgument>
                                           <InArgument x:TypeArguments="x:String" x:Key="in_RequestedDate">[RequestedDateTime]</InArgument>
-                                          <InArgument x:TypeArguments="x:String" x:Key="in_MailTemplate" xml:space="preserve">&lt;html&gt;&lt;body&gt;Hello,&lt;br&gt;We have completed the following processes you requested for {ProcessName} run.&lt;br&gt;Requestor : {RequestedBy}
-&lt;table border=1&gt;&lt;tr&gt;&lt;th&gt;Loan Number&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Exception Type&lt;/th&gt;&lt;th&gt;Exception Details&lt;/th&gt;&lt;/tr&gt;{PlaceHolder}&lt;/table&gt;&lt;br&gt;Regards,&lt;br&gt;BATMAN BOT&lt;/body&gt;&lt;/html&gt;</InArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="in_MailTemplate">[Config("EmailTemplate").ToString]</InArgument>
                                           <InArgument x:TypeArguments="x:String" x:Key="in_MailSubject">Nautilus Archive Process Completion</InArgument>
                                           <InArgument x:TypeArguments="x:String" x:Key="in_QueueName">[Config("OrchestratorQueueName").ToString]</InArgument>
                                           <InArgument x:TypeArguments="x:String" x:Key="in_RequestorEmail">[RequestedBy+"@gesa.com"]</InArgument>
