@@ -6,6 +6,7 @@
     <x:Property Name="in_HostName" Type="InArgument(x:String)" />
     <x:Property Name="in_ProcessStartTime" Type="InArgument(s:DateTime)" />
     <x:Property Name="in_FilePath" Type="InArgument(x:String)" />
+    <x:Property Name="out_SqlId" Type="OutArgument(x:String)" />
   </x:Members>
   <this:ProcessTransaction.in_HostName>
     <InArgument x:TypeArguments="x:String" />
@@ -16,7 +17,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>817,2796</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>817,2896</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="21">
@@ -66,7 +67,7 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Description: In this file all other process specific files will be invoked. If an application exception occurs, the current transaction can be retried. If a BRE is thrown, the transaction will be skipped. Can be a flowchart or sequence. " DisplayName="ProcessTransaction" sap:VirtualizedContainerService.HintSize="797,2736" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Description: In this file all other process specific files will be invoked. If an application exception occurs, the current transaction can be retried. If a BRE is thrown, the transaction will be skipped. Can be a flowchart or sequence. " DisplayName="ProcessTransaction" sap:VirtualizedContainerService.HintSize="797,2836" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="LoanNumber" />
       <Variable x:TypeArguments="x:String" Name="RequestedBy" />
@@ -102,7 +103,7 @@
         <InArgument x:TypeArguments="x:String">[in_TransactionItem.SpecificContent("Loan Number").ToString]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="755,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Processing for Loan Number - &quot;+LoanNumber]">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="755,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Processing Loan Number - &quot;+LoanNumber]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -169,12 +170,20 @@
         <InArgument x:TypeArguments="x:String" x:Key="in_DbName">[in_Config("DbName").ToString]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
+    <Assign DisplayName="Assign Sql id" sap:VirtualizedContainerService.HintSize="755,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[out_SqlId]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[SqlLoanId]</InArgument>
+      </Assign.Value>
+    </Assign>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SQL_ProcessingUpdate workflow" sap:VirtualizedContainerService.HintSize="755,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="SQL\SQL_ProcessingUpdate.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:Int32" x:Key="in_LoanID">[Cint(SqlLoanId)]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_ChildProcess">Extract borrower details</InArgument>
         <InArgument x:TypeArguments="x:Boolean" x:Key="in_Success">True</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_Reason">Extacted Borrower Details</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Reason">["Extacted Borrower Details, Borrower Name : "+BorrowerName+", Borrower Email : "+BorrowerEmail]</InArgument>
         <InArgument x:TypeArguments="s:DateTime" x:Key="in_ProcessStartTime">[in_ProcessStartTime]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_Comments">[String.Empty]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_CreatedBy">[in_HostName]</InArgument>
@@ -189,11 +198,13 @@
         <InArgument x:TypeArguments="ui:Browser" x:Key="in_CadenceBrwsr">[in_CadenceBrowser]</InArgument>
         <OutArgument x:TypeArguments="x:String" x:Key="out_FirstName">[FirstName]</OutArgument>
         <OutArgument x:TypeArguments="x:String" x:Key="out_LastName">[LastName]</OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_SqlId">[SqlLoanId]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Cadence_NavigateToVLF workflow" sap:VirtualizedContainerService.HintSize="755,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Cadence\Cadence_NavigateToVLF.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_SqlID">[SqlLoanId]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Cadence_DownloadFromVLF workflow" sap:VirtualizedContainerService.HintSize="755,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Cadence\Cadence_DownloadFromVLF.xaml">
@@ -202,6 +213,7 @@
         <OutArgument x:TypeArguments="x:String" x:Key="out_DownloadedFilePath">[DownloadedFilePath]</OutArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_FilePath]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_FileName">[If(String.IsNullOrEmpty(LastName),FirstName,LastName)+" "+LoanNumber+" Full File.pdf"]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_SqlID">[SqlLoanId]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="755,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Is Download Successful : &quot;+IsDownloadSuccessful.ToString]" />
@@ -235,7 +247,7 @@
               <InArgument x:TypeArguments="x:Int32" x:Key="in_LoanID">[Cint(SqlLoanId)]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="in_ChildProcess">Export files from VLF</InArgument>
               <InArgument x:TypeArguments="x:Boolean" x:Key="in_Success">False</InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="in_Reason">Failed to export files from VLF</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_Reason">Files are not exists in VLF or Failed to export files from VLF</InArgument>
               <InArgument x:TypeArguments="s:DateTime" x:Key="in_ProcessStartTime">[in_ProcessStartTime]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="in_Comments">[String.Empty]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="in_CreatedBy">[in_HostName]</InArgument>
@@ -253,6 +265,7 @@
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="ui:Browser" x:Key="in_CadenceBrwsr">[in_CadenceBrowser]</InArgument>
         <OutArgument x:TypeArguments="x:String" x:Key="out_ServiceLoanNumber">[DMINumber]</OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_SqlID">[SqlLoanId]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SQL_ProcessingUpdate workflow" sap:VirtualizedContainerService.HintSize="755,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="SQL\SQL_ProcessingUpdate.xaml">
@@ -277,6 +290,12 @@
         <InArgument x:TypeArguments="x:String" x:Key="in_DMINum">[DMINumber]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_FirstName">[FirstName]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_LastName">[LastName]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_HostName">[in_HostName]</InArgument>
+        <InArgument x:TypeArguments="s:DateTime" x:Key="in_ProcessStartTime">[in_ProcessStartTime]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_RequestedDateTime">[RequestedDateTime]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_RequestedBy">[RequestedBy]</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Sqlid">[SqlLoanId]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SQL_ProcessingUpdate workflow" sap:VirtualizedContainerService.HintSize="755,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="SQL\SQL_ProcessingUpdate.xaml">

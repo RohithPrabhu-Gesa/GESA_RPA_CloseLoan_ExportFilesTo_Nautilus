@@ -1,15 +1,21 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Nautilus_Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Nautilus_Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_FilePath" Type="InArgument(x:String)" />
     <x:Property Name="in_LoanNum" Type="InArgument(x:String)" />
     <x:Property Name="in_DMINum" Type="InArgument(x:String)" />
     <x:Property Name="in_FirstName" Type="InArgument(x:String)" />
     <x:Property Name="in_LastName" Type="InArgument(x:String)" />
+    <x:Property Name="in_HostName" Type="InArgument(x:String)" />
+    <x:Property Name="in_ProcessStartTime" Type="InArgument(s:DateTime)" />
+    <x:Property Name="in_RequestedDateTime" Type="InArgument(x:String)" />
+    <x:Property Name="in_RequestedBy" Type="InArgument(x:String)" />
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_Sqlid" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>496,3446</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>500,467</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Nautilus_Process_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -59,470 +65,635 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Nautilus_Process" sap:VirtualizedContainerService.HintSize="476,3386" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Nautilus_Process" sap:VirtualizedContainerService.HintSize="480,407" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="IsExceptionExists" />
+    </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Nautilus Process Started&quot;]" />
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Clicking on Import&quot;]" />
-    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'Import" sap:VirtualizedContainerService.HintSize="434,51" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="ffaa2f90850c8cb8e9c177a734bb0134" Selector="&lt;wnd app='nauclt32.exe' cls='Afx:*' title='Nautilus Client (NAUTILUS)' /&gt;">
-      <ui:WindowScope.Body>
-        <ActivityAction x:TypeArguments="x:Object">
-          <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
-          </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,198" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="438,315" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+      <TryCatch.Try>
+        <Sequence sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="484,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Nautilus Process Started&quot;]" />
+          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'Import" sap:VirtualizedContainerService.HintSize="484,51" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="ffaa2f90850c8cb8e9c177a734bb0134" Selector="&lt;wnd app='nauclt32.exe' cls='Afx:*' title='Nautilus Client (NAUTILUS)' /&gt;">
+            <ui:WindowScope.Body>
+              <ActivityAction x:TypeArguments="x:Object">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,198" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'push button'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="fcb095f781521f450fde5c2eb8da480a" Selector="&lt;ctrl name='Import Documents' role='push button' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:Click.Target>
+                  </ui:Click>
+                </Sequence>
+              </ActivityAction>
+            </ui:WindowScope.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:WindowScope>
+          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'nauclt32.exe Import'" sap:VirtualizedContainerService.HintSize="484,51" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="e64d43de2b9f20cfb3cd3dd30db0a90a" Selector="&lt;wnd app='nauclt32.exe' cls='#32770' title='Import Document' /&gt;">
+            <ui:WindowScope.Body>
+              <ActivityAction x:TypeArguments="x:Object">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,2755" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Typing Path : &quot;+in_FilePath]" />
+                  <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DelayBefore="1000" DisplayName="Type Into  - File Path" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="[in_FilePath]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="a407255bc5454c913accff4f141f3554" Selector="&lt;wnd ctrlid='2251' cls='Edit' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                  </ui:TypeInto>
+                  <ui:SelectItem ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="1000" DisplayName="Select Item  - Doc Type Group" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SelectItem_1" Item="Mortgage Loans">
+                    <ui:SelectItem.Items>
+                      <scg:List x:TypeArguments="x:String" Capacity="64">
+                        <x:String xml:space="preserve">&lt;&lt; ALL &gt;&gt; </x:String>
+                        <x:String>Card Services ATM/DEBIT</x:String>
+                        <x:String>Card Services Fraud</x:String>
+                        <x:String>Check Image Research Group</x:String>
+                        <x:String>Commerical Lending - Rates</x:String>
+                        <x:String>Compliance Signature of Guarentee</x:String>
+                        <x:String>Consumer Loans</x:String>
+                        <x:String>High School</x:String>
+                        <x:String>HSA Services</x:String>
+                        <x:String>IRA Services -Inherited Roth</x:String>
+                        <x:String>IRA Services -Inherited Traditional</x:String>
+                        <x:String>IRA Services -Roth</x:String>
+                        <x:String>IRA Services -SEP</x:String>
+                        <x:String>IRA Services -Simple</x:String>
+                        <x:String>IRA Services -Traditional</x:String>
+                        <x:String>MBR Deposit Services - ACH</x:String>
+                        <x:String>MBR Deposit Services - Courtesy Pay</x:String>
+                        <x:String>MBR Deposit Services - Electronic</x:String>
+                        <x:String>MBR Deposit Services - Rates</x:String>
+                        <x:String>MBR Deposit Services - Safe Deposit Box</x:String>
+                        <x:String>MBR Deposit Services - Wires</x:String>
+                        <x:String>Member Statements</x:String>
+                        <x:String>Member Statements Blank Tax Forms</x:String>
+                        <x:String>Membership</x:String>
+                        <x:String>Membership Legal</x:String>
+                        <x:String>Mortgage - REO</x:String>
+                        <x:String>Mortgage Loans</x:String>
+                        <x:String>Mortgage Loss Mitigation</x:String>
+                        <x:String>Non-Member Documents</x:String>
+                        <x:String>PROD - Certificates</x:String>
+                        <x:String>PROD - Checking</x:String>
+                        <x:String>PROD - Money Market Account</x:String>
+                        <x:String>PROD - Savings</x:String>
+                        <x:String>PROD - UTMA</x:String>
+                        <x:String>Receipts</x:String>
+                        <x:String>Reports DMI Mortgage</x:String>
+                        <x:String>Reports DNA Accounting</x:String>
+                        <x:String>Reports DNA ACH</x:String>
+                        <x:String>Reports DNA Branches</x:String>
+                        <x:String>Reports DNA Cards</x:String>
+                        <x:String>Reports DNA Certificate &amp; IRAs</x:String>
+                        <x:String>Reports DNA Commercial</x:String>
+                        <x:String>Reports DNA Deposits</x:String>
+                        <x:String>Reports DNA Lending</x:String>
+                        <x:String>Reports DNA Marketing</x:String>
+                        <x:String>Reports DNA Members</x:String>
+                        <x:String>Reports DNA Summary</x:String>
+                        <x:String>Reports DNA WebServices</x:String>
+                        <x:String>X Business Reports OSI</x:String>
+                      </scg:List>
+                    </ui:SelectItem.Items>
+                    <ui:SelectItem.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="1df2214f14d4e5bbe2c49b68f819edf1" Selector="&lt;wnd ctrlid='2118' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:SelectItem.Target>
+                  </ui:SelectItem>
+                  <ui:SelectItem ContinueOnError="{x:Null}" DelayAfter="1000" DelayBefore="1000" DisplayName="Select Item - Doc Type" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SelectItem_2" Item="MTG - Full Loan Package">
+                    <ui:SelectItem.Items>
+                      <scg:List x:TypeArguments="x:String" Capacity="50">
+                        <x:String>MMA - Member Account Agreement Estate</x:String>
+                        <x:String>MMA - Member Account Agreement Fiduciary</x:String>
+                        <x:String>MMA - Member Account Agreement Guardian</x:String>
+                        <x:String>MMA - Member Account Agreement Rep Payee Acct (RPA)</x:String>
+                        <x:String>MMA - Member Account Agreement Sole Prop</x:String>
+                        <x:String>MMA - Notice of Delayed Availability</x:String>
+                        <x:String>MMA - Partnership Resolution of Authority</x:String>
+                        <x:String>MMA - Resolution of Unincorporated Organization</x:String>
+                        <x:String>MMA - Return Checks</x:String>
+                        <x:String>MMA - Sole Prop Resolution Agreement</x:String>
+                        <x:String>MMA - Stop Payment Cashier's Check</x:String>
+                        <x:String>Mortgage Annual Escrow Letters</x:String>
+                        <x:String>Mortgage Loans</x:String>
+                        <x:String>Mortgage PMI Notices</x:String>
+                        <x:String>Mortgage Statements</x:String>
+                        <x:String>MTG - 2013 Escrow Analysis</x:String>
+                        <x:String>MTG - Appraisal</x:String>
+                        <x:String>MTG - Checklists</x:String>
+                        <x:String>MTG - Construction Loans</x:String>
+                        <x:String>MTG - Correspondence</x:String>
+                        <x:String>MTG - DMI ACH Letter</x:String>
+                        <x:String>MTG - Escrow Close Ltr</x:String>
+                        <x:String>MTG - Final HUD</x:String>
+                        <x:String>MTG - Final Title Policy</x:String>
+                        <x:String>MTG - Full Loan Package</x:String>
+                        <x:String>MTG - Insurance</x:String>
+                        <x:String>MTG - Left Folder</x:String>
+                        <x:String>MTG - Maintenance</x:String>
+                        <x:String>MTG - MISC</x:String>
+                        <x:String>MTG - Missed Scans</x:String>
+                        <x:String>MTG - Modification Loans/Documents</x:String>
+                        <x:String>MTG - Paid in Full</x:String>
+                        <x:String>MTG - Payoff Letters Real Estate</x:String>
+                        <x:String>MTG - PMI Notices</x:String>
+                        <x:String>MTG - Recorded Deed of Trust</x:String>
+                        <x:String>MTG - REO</x:String>
+                        <x:String>MTG - Right Folder</x:String>
+                        <x:String>MTG - Servicing Set Up</x:String>
+                        <x:String>MTG - Sold</x:String>
+                        <x:String>MTG - Spectrum Mortgages</x:String>
+                        <x:String>MTG – Stop Payment Cashier’s Check</x:String>
+                        <x:String>MTG - Taxes</x:String>
+                        <x:String>MTG - Withdrawn_Denied Loan Package</x:String>
+                        <x:String>Non-Member Adverse Letter</x:String>
+                        <x:String>Non-Member Declined Account Opening Validation or References</x:String>
+                        <x:String>Non-Member Joint Person/Address Updates</x:String>
+                        <x:String>Northland Statements</x:String>
+                        <x:String>NSF Charge</x:String>
+                        <x:String>Online Back of Statement</x:String>
+                        <x:String>Online Disclosures</x:String>
+                      </scg:List>
+                    </ui:SelectItem.Items>
+                    <ui:SelectItem.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="a9e7ff91a07f65c51764c5542ee8496a" Selector="&lt;wnd ctrlid='2117' /&gt;" WaitForReady="INTERACTIVE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:SelectItem.Target>
+                  </ui:SelectItem>
+                  <ui:Click DelayMS="{x:Null}" SendWindowMessages="{x:Null}" ClickType="CLICK_SINGLE" DelayBefore="500" DisplayName="Click - Doc Type" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="False">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="02db940292469fa9a5a12acced664292" Selector="&lt;wnd ctrlid='2117' aaname='Document Type' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:Click.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:Click>
+                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" ClickType="CLICK_SINGLE" ContinueOnError="True" DisplayName="Click 'list item'" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="True">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="eeeaac59bf5a5d103ec8c2803eb0d2e9" Selector="&lt;ctrl name='Document Type' role='list' /&gt;&lt;ctrl name='MTG - Full Loan Package' role='list item' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:Click.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:Click>
+                  <ui:SelectItem ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="1000" DisplayName="Select Item 'File type'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SelectItem_3" Item="PDF">
+                    <ui:SelectItem.Items>
+                      <scg:List x:TypeArguments="x:String" Capacity="50">
+                        <x:String>AVI Movie</x:String>
+                        <x:String>CAD Document</x:String>
+                        <x:String>Classification Configuration</x:String>
+                        <x:String>Data Mining Format</x:String>
+                        <x:String>DJDE</x:String>
+                        <x:String>Dynamic Document</x:String>
+                        <x:String>Electronic Form</x:String>
+                        <x:String>Email Message</x:String>
+                        <x:String>Emtex AFP/Metacode</x:String>
+                        <x:String>Engineering Drawings</x:String>
+                        <x:String>Export Transfer Document</x:String>
+                        <x:String>FormDocs Document</x:String>
+                        <x:String>FormDocs Template</x:String>
+                        <x:String>HL7 Waveform</x:String>
+                        <x:String>HTML</x:String>
+                        <x:String>HTML Unicode</x:String>
+                        <x:String>Image File Format</x:String>
+                        <x:String>Image Rendered PDF</x:String>
+                        <x:String>Internal XML</x:String>
+                        <x:String>Lotus Notes Document</x:String>
+                        <x:String>Meditech Archive Report</x:String>
+                        <x:String>MHT</x:String>
+                        <x:String>MidMark Car Document</x:String>
+                        <x:String>MidMark Stress Document</x:String>
+                        <x:String>MS Excel Spreadsheet</x:String>
+                        <x:String>MS Outlook Message</x:String>
+                        <x:String>MS Power Point</x:String>
+                        <x:String>MS Word Document</x:String>
+                        <x:String>PCL (Full size)</x:String>
+                        <x:String>PCL (Original Implementation)</x:String>
+                        <x:String>PCL 2 (Data Stream)</x:String>
+                        <x:String>PCL Data Stream</x:String>
+                        <x:String>PCL Dictionary Import</x:String>
+                        <x:String>PCL Filter</x:String>
+                        <x:String>PCL Self-Contained</x:String>
+                        <x:String>PDF</x:String>
+                        <x:String>Quick Time Movie</x:String>
+                        <x:String>Raw Text Report Format</x:String>
+                        <x:String>Redacted Image</x:String>
+                        <x:String>Rich Text Format</x:String>
+                        <x:String>Spicer Document</x:String>
+                        <x:String>Text Report Format</x:String>
+                        <x:String>Thumbnail Image</x:String>
+                        <x:String>TXT</x:String>
+                        <x:String>Unity Form</x:String>
+                        <x:String>WAV Audio File</x:String>
+                        <x:String>XML</x:String>
+                        <x:String>XPT</x:String>
+                        <x:String>Zip Compression Archive</x:String>
+                        <x:String>Zipped Html Archive</x:String>
+                      </scg:List>
+                    </ui:SelectItem.Items>
+                    <ui:SelectItem.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="a1e9a8c2a742f88e8ff985a76b293410" Selector="&lt;wnd ctrlid='2253' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:SelectItem.Target>
+                  </ui:SelectItem>
+                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" ContinueOnError="True" DisplayName="Click 'list item  PDF'" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="4735a56ec97c30ad8335152e259063d1" Selector="&lt;ctrl name='File Type' role='list' /&gt;&lt;ctrl name='PDF' role='list item' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:Click.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:Click>
+                  <ui:ClickImage ContinueOnError="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click Image 'nauclt32.exe Import'" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="ClickImage_1" KeyModifiers="None" MouseButton="BTN_LEFT">
+                    <ui:ClickImage.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:ClickImage.CursorPosition>
+                    <ui:ClickImage.Image>
+                      <ui:ImageTarget Image="{x:Null}" Accuracy="0.6" Profile="Basic" TargetImageBase64="iVBORw0KGgoAAAANSUhEUgAAAUMAAAAbCAYAAADmme0pAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHrSURBVHhe7ZZRjsIwEEN7XW7F3XoBbsA2HyN5rUky0ApW2WfpqY3HaQSoFtvj8XgCAPx3KEMAgAPKEADggDIEADigDAEADihDAIADyhAA4IAyBAA4oAwX5n6/A0ARynBh2g98u90AYMK+75ThykQZIoTGogwXhzJEqCbKcHEoQ4Rq6pbhtm2/yDIj3tlzlk+emZ11xflXfwbKEKGa0jK84kW/+qWu8Mkz21l+3hXnX/0ZKEOEaiqX4atc/VJX+OSZ7Sw/7y9+b5QhQjW9VYZRBJ5TX2c9T2fhq1f1dZ75jd7ezI979xXNuOf3um7XQNeaU8L3mXuaUyhDhGo6/c8wsr6n4uusks/8mZf5s1y7aibLa9Y9v9f1LF/ZN/IdyhChmk7/M4ys71HfmeXVD2KvkmXcy3xdx7MCn2dr97J9vWf0MtncfSfLO5QhQjW9XIY+672UPT84m884e9bMH3ltrV7vGb1MNh/5Qc8PKEOEaiqXYe+l/LY/8zJ/9syeP/LaWj2/j/Uo4947vkMZIlRTWoaN9pIplVnFVy/ufZ3lR34291zmZXvC84yuq15bh+fX3n27KjH3mXqacShDhGrqliGsAWWIUE2U4eJQhgjVRBkuDmWIUE2U4eJQhgjVRBkuTivD9iMDwIz9+QPJ4L8sqJONegAAAABJRU5ErkJggg==" />
+                    </ui:ClickImage.Image>
+                    <ui:ClickImage.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:ClickImage.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ClickImage>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Typing Loan Number : &quot;+in_LoanNum]" />
+                  <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'Loan Num" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_7" Text="[in_LoanNum+ &quot;[k(tab)]&quot;]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="dbc42f8417ab10c0a2ce3ef0ad2f5046" Selector="&lt;ctrl name='Keyword  Cadence Loan Number' role='editable text' /&gt;&lt;nav up='1' /&gt;&lt;ctrl name='Keyword  Cadence Loan Number' role='editable text' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                  </ui:TypeInto>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Typing DMI Num : &quot;+in_DMINum]" />
+                  <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'DMI" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_8" Text="[in_DMINum+ &quot;[k(tab)][k(tab)]&quot;]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="d053e6830fc18289a1f5ac12dc2e27fe" Selector="&lt;ctrl name='Keyword  DMI Loan Number' role='editable text' /&gt;&lt;nav up='1' /&gt;&lt;ctrl name='Keyword  DMI Loan Number' role='editable text' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                  </ui:TypeInto>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Typing Name : &quot;+in_FirstName+&quot; &quot;+in_LastName]" />
+                  <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into Last Name" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_10" Text="[in_LastName+ &quot;[k(tab)]&quot;]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="569158da68f6b4828bf7797c19da5124" Selector="&lt;ctrl name='Keyword  Last Name' role='editable text' /&gt;&lt;nav up='1' /&gt;&lt;ctrl name='Keyword  Last Name' role='editable text' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                  </ui:TypeInto>
+                  <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into 'First Name" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_9" Text="[in_FirstName]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="b142c86d2a1b28481215259d7616a48b" Selector="&lt;ctrl name='Keyword  First Name' role='editable text' /&gt;&lt;nav up='1' /&gt;&lt;ctrl name='Keyword  First Name' role='editable text' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                  </ui:TypeInto>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Clicking On Import&quot;]" />
+                  <ui:Click DelayBefore="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="5000" DisplayName="Click 'Import" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_6" KeyModifiers="None" MouseButton="BTN_LEFT">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="c0ca0ca5f77782ecfea7c8a71503aab2" Selector="&lt;wnd ctrlid='1' title='&amp;amp;Import' aaname='Import' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:Click.Target>
+                  </ui:Click>
+                  <ui:OnUiElementAppear FoundElement="{x:Null}" WaitActive="{x:Null}" WaitVisible="{x:Null}" ContinueOnError="True" DisplayName="On Element Appear -  Reviusion Mesage" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="OnUiElementAppear_1" RepeatForever="False">
+                    <ui:OnUiElementAppear.Body>
+                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,702" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Warn" Message="[&quot;File already exists in Nautilus&quot;]" />
+                        <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'Button'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_7" KeyModifiers="None" MouseButton="BTN_LEFT">
+                          <ui:Click.CursorPosition>
+                            <ui:CursorPosition Position="Center">
+                              <ui:CursorPosition.OffsetX>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:CursorPosition.OffsetX>
+                              <ui:CursorPosition.OffsetY>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:CursorPosition.OffsetY>
+                            </ui:CursorPosition>
+                          </ui:Click.CursorPosition>
+                          <ui:Click.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="1b7ac0c573d2c43649bae40c56aaa8e5" Selector="&lt;wnd app='nauclt32.exe' cls='#32770' title='Document Revisions' /&gt;&lt;wnd ctrlid='2' title='&amp;amp;Cancel' /&gt;">
+                              <ui:Target.TimeoutMS>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:Target.TimeoutMS>
+                              <ui:Target.WaitForReady>
+                                <InArgument x:TypeArguments="ui:WaitForReady" />
+                              </ui:Target.WaitForReady>
+                            </ui:Target>
+                          </ui:Click.Target>
+                        </ui:Click>
+                        <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" ContinueOnError="True" DisplayName="Click 'exit'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_8" KeyModifiers="None" MouseButton="BTN_LEFT">
+                          <ui:Click.CursorPosition>
+                            <ui:CursorPosition Position="Center">
+                              <ui:CursorPosition.OffsetX>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:CursorPosition.OffsetX>
+                              <ui:CursorPosition.OffsetY>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:CursorPosition.OffsetY>
+                            </ui:CursorPosition>
+                          </ui:Click.CursorPosition>
+                          <ui:Click.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="e1b3461c12cbd58039f3b15e842a15cc" Selector="&lt;wnd ctrlid='2' title='E&amp;amp;xit' /&gt;">
+                              <ui:Target.TimeoutMS>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:Target.TimeoutMS>
+                              <ui:Target.WaitForReady>
+                                <InArgument x:TypeArguments="ui:WaitForReady" />
+                              </ui:Target.WaitForReady>
+                            </ui:Target>
+                          </ui:Click.Target>
+                        </ui:Click>
+                        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SQL_ProcessingUpdate workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="SQL\SQL_ProcessingUpdate.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:Int32" x:Key="in_LoanID">[Cint(in_Sqlid)]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_ChildProcess">Check File already Exists in Nautilus</InArgument>
+                            <InArgument x:TypeArguments="x:Boolean" x:Key="in_Success">False</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_Reason">File already exists in Nautilus application</InArgument>
+                            <InArgument x:TypeArguments="s:DateTime" x:Key="in_ProcessStartTime">[in_ProcessStartTime]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_Comments">[String.Empty]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_CreatedBy">[in_HostName]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_ParentProcess">[in_Config("ProcessName").ToString]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_DbName">[in_Config("DbName").ToString]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_RequestedBy">[in_RequestedBy]</InArgument>
+                            <InArgument x:TypeArguments="s:DateTime" x:Key="in_RequestedDateTime">[Convert.ToDateTime(in_RequestedDateTime)]</InArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                        <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[IsExceptionExists]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </ui:OnUiElementAppear.Body>
+                    <ui:OnUiElementAppear.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="e1f0193d5aef415327cfcebc1850abe1" Selector="&lt;wnd app='nauclt32.exe' cls='#32770' title='Document Revisions' /&gt;&lt;wnd ctrlid='8781' title='This document appears to be related to an existing document. If *' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:OnUiElementAppear.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:OnUiElementAppear>
+                </Sequence>
+              </ActivityAction>
+            </ui:WindowScope.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:WindowScope>
+          <If Condition="[IsExceptionExists]" sap:VirtualizedContainerService.HintSize="484,208" sap2010:WorkflowViewState.IdRef="If_1">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'push button'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
-              <ui:Click.CursorPosition>
-                <ui:CursorPosition Position="Center">
-                  <ui:CursorPosition.OffsetX>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetX>
-                  <ui:CursorPosition.OffsetY>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetY>
-                </ui:CursorPosition>
-              </ui:Click.CursorPosition>
-              <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="fcb095f781521f450fde5c2eb8da480a" Selector="&lt;ctrl name='Import Documents' role='push button' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:Click.Target>
-            </ui:Click>
-          </Sequence>
-        </ActivityAction>
-      </ui:WindowScope.Body>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-    </ui:WindowScope>
-    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'nauclt32.exe Import'" sap:VirtualizedContainerService.HintSize="434,2941" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="e64d43de2b9f20cfb3cd3dd30db0a90a" Selector="&lt;wnd app='nauclt32.exe' cls='#32770' title='Import Document' /&gt;">
-      <ui:WindowScope.Body>
-        <ActivityAction x:TypeArguments="x:Object">
-          <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
-          </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,2795" sap2010:WorkflowViewState.IdRef="Sequence_3">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Typing Path : &quot;+in_FilePath]" />
-            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DelayBefore="1000" DisplayName="Type Into  - File Path" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="[in_FilePath]">
-              <ui:TypeInto.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="a407255bc5454c913accff4f141f3554" Selector="&lt;wnd ctrlid='2251' cls='Edit' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:TypeInto.Target>
-            </ui:TypeInto>
-            <ui:SelectItem ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="1000" DisplayName="Select Item  - Doc Type Group" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SelectItem_1" Item="Mortgage Loans">
-              <ui:SelectItem.Items>
-                <scg:List x:TypeArguments="x:String" Capacity="64">
-                  <x:String xml:space="preserve">&lt;&lt; ALL &gt;&gt; </x:String>
-                  <x:String>Card Services ATM/DEBIT</x:String>
-                  <x:String>Card Services Fraud</x:String>
-                  <x:String>Check Image Research Group</x:String>
-                  <x:String>Commerical Lending - Rates</x:String>
-                  <x:String>Compliance Signature of Guarentee</x:String>
-                  <x:String>Consumer Loans</x:String>
-                  <x:String>High School</x:String>
-                  <x:String>HSA Services</x:String>
-                  <x:String>IRA Services -Inherited Roth</x:String>
-                  <x:String>IRA Services -Inherited Traditional</x:String>
-                  <x:String>IRA Services -Roth</x:String>
-                  <x:String>IRA Services -SEP</x:String>
-                  <x:String>IRA Services -Simple</x:String>
-                  <x:String>IRA Services -Traditional</x:String>
-                  <x:String>MBR Deposit Services - ACH</x:String>
-                  <x:String>MBR Deposit Services - Courtesy Pay</x:String>
-                  <x:String>MBR Deposit Services - Electronic</x:String>
-                  <x:String>MBR Deposit Services - Rates</x:String>
-                  <x:String>MBR Deposit Services - Safe Deposit Box</x:String>
-                  <x:String>MBR Deposit Services - Wires</x:String>
-                  <x:String>Member Statements</x:String>
-                  <x:String>Member Statements Blank Tax Forms</x:String>
-                  <x:String>Membership</x:String>
-                  <x:String>Membership Legal</x:String>
-                  <x:String>Mortgage - REO</x:String>
-                  <x:String>Mortgage Loans</x:String>
-                  <x:String>Mortgage Loss Mitigation</x:String>
-                  <x:String>Non-Member Documents</x:String>
-                  <x:String>PROD - Certificates</x:String>
-                  <x:String>PROD - Checking</x:String>
-                  <x:String>PROD - Money Market Account</x:String>
-                  <x:String>PROD - Savings</x:String>
-                  <x:String>PROD - UTMA</x:String>
-                  <x:String>Receipts</x:String>
-                  <x:String>Reports DMI Mortgage</x:String>
-                  <x:String>Reports DNA Accounting</x:String>
-                  <x:String>Reports DNA ACH</x:String>
-                  <x:String>Reports DNA Branches</x:String>
-                  <x:String>Reports DNA Cards</x:String>
-                  <x:String>Reports DNA Certificate &amp; IRAs</x:String>
-                  <x:String>Reports DNA Commercial</x:String>
-                  <x:String>Reports DNA Deposits</x:String>
-                  <x:String>Reports DNA Lending</x:String>
-                  <x:String>Reports DNA Marketing</x:String>
-                  <x:String>Reports DNA Members</x:String>
-                  <x:String>Reports DNA Summary</x:String>
-                  <x:String>Reports DNA WebServices</x:String>
-                  <x:String>X Business Reports OSI</x:String>
-                </scg:List>
-              </ui:SelectItem.Items>
-              <ui:SelectItem.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="1df2214f14d4e5bbe2c49b68f819edf1" Selector="&lt;wnd ctrlid='2118' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:SelectItem.Target>
-            </ui:SelectItem>
-            <ui:SelectItem ContinueOnError="{x:Null}" DelayAfter="1000" DelayBefore="1000" DisplayName="Select Item - Doc Type" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SelectItem_2" Item="MTG - Full Loan Package">
-              <ui:SelectItem.Items>
-                <scg:List x:TypeArguments="x:String" Capacity="50">
-                  <x:String>MMA - Member Account Agreement Estate</x:String>
-                  <x:String>MMA - Member Account Agreement Fiduciary</x:String>
-                  <x:String>MMA - Member Account Agreement Guardian</x:String>
-                  <x:String>MMA - Member Account Agreement Rep Payee Acct (RPA)</x:String>
-                  <x:String>MMA - Member Account Agreement Sole Prop</x:String>
-                  <x:String>MMA - Notice of Delayed Availability</x:String>
-                  <x:String>MMA - Partnership Resolution of Authority</x:String>
-                  <x:String>MMA - Resolution of Unincorporated Organization</x:String>
-                  <x:String>MMA - Return Checks</x:String>
-                  <x:String>MMA - Sole Prop Resolution Agreement</x:String>
-                  <x:String>MMA - Stop Payment Cashier's Check</x:String>
-                  <x:String>Mortgage Annual Escrow Letters</x:String>
-                  <x:String>Mortgage Loans</x:String>
-                  <x:String>Mortgage PMI Notices</x:String>
-                  <x:String>Mortgage Statements</x:String>
-                  <x:String>MTG - 2013 Escrow Analysis</x:String>
-                  <x:String>MTG - Appraisal</x:String>
-                  <x:String>MTG - Checklists</x:String>
-                  <x:String>MTG - Construction Loans</x:String>
-                  <x:String>MTG - Correspondence</x:String>
-                  <x:String>MTG - DMI ACH Letter</x:String>
-                  <x:String>MTG - Escrow Close Ltr</x:String>
-                  <x:String>MTG - Final HUD</x:String>
-                  <x:String>MTG - Final Title Policy</x:String>
-                  <x:String>MTG - Full Loan Package</x:String>
-                  <x:String>MTG - Insurance</x:String>
-                  <x:String>MTG - Left Folder</x:String>
-                  <x:String>MTG - Maintenance</x:String>
-                  <x:String>MTG - MISC</x:String>
-                  <x:String>MTG - Missed Scans</x:String>
-                  <x:String>MTG - Modification Loans/Documents</x:String>
-                  <x:String>MTG - Paid in Full</x:String>
-                  <x:String>MTG - Payoff Letters Real Estate</x:String>
-                  <x:String>MTG - PMI Notices</x:String>
-                  <x:String>MTG - Recorded Deed of Trust</x:String>
-                  <x:String>MTG - REO</x:String>
-                  <x:String>MTG - Right Folder</x:String>
-                  <x:String>MTG - Servicing Set Up</x:String>
-                  <x:String>MTG - Sold</x:String>
-                  <x:String>MTG - Spectrum Mortgages</x:String>
-                  <x:String>MTG – Stop Payment Cashier’s Check</x:String>
-                  <x:String>MTG - Taxes</x:String>
-                  <x:String>MTG - Withdrawn_Denied Loan Package</x:String>
-                  <x:String>Non-Member Adverse Letter</x:String>
-                  <x:String>Non-Member Declined Account Opening Validation or References</x:String>
-                  <x:String>Non-Member Joint Person/Address Updates</x:String>
-                  <x:String>Northland Statements</x:String>
-                  <x:String>NSF Charge</x:String>
-                  <x:String>Online Back of Statement</x:String>
-                  <x:String>Online Disclosures</x:String>
-                </scg:List>
-              </ui:SelectItem.Items>
-              <ui:SelectItem.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="a9e7ff91a07f65c51764c5542ee8496a" Selector="&lt;wnd ctrlid='2117' /&gt;" WaitForReady="INTERACTIVE">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                </ui:Target>
-              </ui:SelectItem.Target>
-            </ui:SelectItem>
-            <ui:Click DelayMS="{x:Null}" SendWindowMessages="{x:Null}" ClickType="CLICK_SINGLE" DelayBefore="500" DisplayName="Click - Doc Type" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="False">
-              <ui:Click.CursorPosition>
-                <ui:CursorPosition Position="Center">
-                  <ui:CursorPosition.OffsetX>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetX>
-                  <ui:CursorPosition.OffsetY>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetY>
-                </ui:CursorPosition>
-              </ui:Click.CursorPosition>
-              <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="02db940292469fa9a5a12acced664292" Selector="&lt;wnd ctrlid='2117' aaname='Document Type' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:Click.Target>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:Click>
-            <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" ClickType="CLICK_SINGLE" ContinueOnError="True" DisplayName="Click 'list item'" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="True">
-              <ui:Click.CursorPosition>
-                <ui:CursorPosition Position="Center">
-                  <ui:CursorPosition.OffsetX>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetX>
-                  <ui:CursorPosition.OffsetY>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetY>
-                </ui:CursorPosition>
-              </ui:Click.CursorPosition>
-              <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="eeeaac59bf5a5d103ec8c2803eb0d2e9" Selector="&lt;ctrl name='Document Type' role='list' /&gt;&lt;ctrl name='MTG - Full Loan Package' role='list item' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:Click.Target>
+            <If.Then>
+              <Throw Exception="[New BusinessRuleException(&quot;File already exists in Nautilus&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
+            </If.Then>
+          </If>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="484,91" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;nautilus Process Completed&quot;]" />
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="ui:BusinessRuleException">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="exception" />
+            </ActivityAction.Argument>
+            <Rethrow sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Rethrow_2" />
+          </ActivityAction>
+        </Catch>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_6">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-            </ui:Click>
-            <ui:SelectItem ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="1000" DisplayName="Select Item 'File type'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SelectItem_3" Item="PDF">
-              <ui:SelectItem.Items>
-                <scg:List x:TypeArguments="x:String" Capacity="50">
-                  <x:String>AVI Movie</x:String>
-                  <x:String>CAD Document</x:String>
-                  <x:String>Classification Configuration</x:String>
-                  <x:String>Data Mining Format</x:String>
-                  <x:String>DJDE</x:String>
-                  <x:String>Dynamic Document</x:String>
-                  <x:String>Electronic Form</x:String>
-                  <x:String>Email Message</x:String>
-                  <x:String>Emtex AFP/Metacode</x:String>
-                  <x:String>Engineering Drawings</x:String>
-                  <x:String>Export Transfer Document</x:String>
-                  <x:String>FormDocs Document</x:String>
-                  <x:String>FormDocs Template</x:String>
-                  <x:String>HL7 Waveform</x:String>
-                  <x:String>HTML</x:String>
-                  <x:String>HTML Unicode</x:String>
-                  <x:String>Image File Format</x:String>
-                  <x:String>Image Rendered PDF</x:String>
-                  <x:String>Internal XML</x:String>
-                  <x:String>Lotus Notes Document</x:String>
-                  <x:String>Meditech Archive Report</x:String>
-                  <x:String>MHT</x:String>
-                  <x:String>MidMark Car Document</x:String>
-                  <x:String>MidMark Stress Document</x:String>
-                  <x:String>MS Excel Spreadsheet</x:String>
-                  <x:String>MS Outlook Message</x:String>
-                  <x:String>MS Power Point</x:String>
-                  <x:String>MS Word Document</x:String>
-                  <x:String>PCL (Full size)</x:String>
-                  <x:String>PCL (Original Implementation)</x:String>
-                  <x:String>PCL 2 (Data Stream)</x:String>
-                  <x:String>PCL Data Stream</x:String>
-                  <x:String>PCL Dictionary Import</x:String>
-                  <x:String>PCL Filter</x:String>
-                  <x:String>PCL Self-Contained</x:String>
-                  <x:String>PDF</x:String>
-                  <x:String>Quick Time Movie</x:String>
-                  <x:String>Raw Text Report Format</x:String>
-                  <x:String>Redacted Image</x:String>
-                  <x:String>Rich Text Format</x:String>
-                  <x:String>Spicer Document</x:String>
-                  <x:String>Text Report Format</x:String>
-                  <x:String>Thumbnail Image</x:String>
-                  <x:String>TXT</x:String>
-                  <x:String>Unity Form</x:String>
-                  <x:String>WAV Audio File</x:String>
-                  <x:String>XML</x:String>
-                  <x:String>XPT</x:String>
-                  <x:String>Zip Compression Archive</x:String>
-                  <x:String>Zipped Html Archive</x:String>
-                </scg:List>
-              </ui:SelectItem.Items>
-              <ui:SelectItem.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="a1e9a8c2a742f88e8ff985a76b293410" Selector="&lt;wnd ctrlid='2253' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:SelectItem.Target>
-            </ui:SelectItem>
-            <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" ContinueOnError="True" DisplayName="Click 'list item  PDF'" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT">
-              <ui:Click.CursorPosition>
-                <ui:CursorPosition Position="Center">
-                  <ui:CursorPosition.OffsetX>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetX>
-                  <ui:CursorPosition.OffsetY>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetY>
-                </ui:CursorPosition>
-              </ui:Click.CursorPosition>
-              <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="4735a56ec97c30ad8335152e259063d1" Selector="&lt;ctrl name='File Type' role='list' /&gt;&lt;ctrl name='PDF' role='list item' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:Click.Target>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:Click>
-            <ui:ClickImage ContinueOnError="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click Image 'nauclt32.exe Import'" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="ClickImage_1" KeyModifiers="None" MouseButton="BTN_LEFT">
-              <ui:ClickImage.CursorPosition>
-                <ui:CursorPosition Position="Center">
-                  <ui:CursorPosition.OffsetX>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetX>
-                  <ui:CursorPosition.OffsetY>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetY>
-                </ui:CursorPosition>
-              </ui:ClickImage.CursorPosition>
-              <ui:ClickImage.Image>
-                <ui:ImageTarget Image="{x:Null}" Accuracy="0.6" Profile="Basic" TargetImageBase64="iVBORw0KGgoAAAANSUhEUgAAAUMAAAAbCAYAAADmme0pAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHrSURBVHhe7ZZRjsIwEEN7XW7F3XoBbsA2HyN5rUky0ApW2WfpqY3HaQSoFtvj8XgCAPx3KEMAgAPKEADggDIEADigDAEADihDAIADyhAA4IAyBAA4oAwX5n6/A0ARynBh2g98u90AYMK+75ThykQZIoTGogwXhzJEqCbKcHEoQ4Rq6pbhtm2/yDIj3tlzlk+emZ11xflXfwbKEKGa0jK84kW/+qWu8Mkz21l+3hXnX/0ZKEOEaiqX4atc/VJX+OSZ7Sw/7y9+b5QhQjW9VYZRBJ5TX2c9T2fhq1f1dZ75jd7ezI979xXNuOf3um7XQNeaU8L3mXuaUyhDhGo6/c8wsr6n4uusks/8mZf5s1y7aibLa9Y9v9f1LF/ZN/IdyhChmk7/M4ys71HfmeXVD2KvkmXcy3xdx7MCn2dr97J9vWf0MtncfSfLO5QhQjW9XIY+672UPT84m884e9bMH3ltrV7vGb1MNh/5Qc8PKEOEaiqXYe+l/LY/8zJ/9syeP/LaWj2/j/Uo4947vkMZIlRTWoaN9pIplVnFVy/ufZ3lR34291zmZXvC84yuq15bh+fX3n27KjH3mXqacShDhGrqliGsAWWIUE2U4eJQhgjVRBkuDmWIUE2U4eJQhgjVRBkuTivD9iMDwIz9+QPJ4L8sqJONegAAAABJRU5ErkJggg==" />
-              </ui:ClickImage.Image>
-              <ui:ClickImage.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:ClickImage.Target>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:ClickImage>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Typing Loan Number : &quot;+in_LoanNum]" />
-            <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'Loan Num" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_7" Text="[in_LoanNum+ &quot;[k(tab)]&quot;]">
-              <ui:TypeInto.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="dbc42f8417ab10c0a2ce3ef0ad2f5046" Selector="&lt;ctrl name='Keyword  Cadence Loan Number' role='editable text' /&gt;&lt;nav up='1' /&gt;&lt;ctrl name='Keyword  Cadence Loan Number' role='editable text' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:TypeInto.Target>
-            </ui:TypeInto>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Typing DMI Num : &quot;+in_DMINum]" />
-            <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'DMI" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_8" Text="[in_DMINum+ &quot;[k(tab)][k(tab)]&quot;]">
-              <ui:TypeInto.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="d053e6830fc18289a1f5ac12dc2e27fe" Selector="&lt;ctrl name='Keyword  DMI Loan Number' role='editable text' /&gt;&lt;nav up='1' /&gt;&lt;ctrl name='Keyword  DMI Loan Number' role='editable text' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:TypeInto.Target>
-            </ui:TypeInto>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Typing Name : &quot;+in_FirstName+&quot; &quot;+in_LastName]" />
-            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into Last Name" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_10" Text="[in_LastName+ &quot;[k(tab)]&quot;]">
-              <ui:TypeInto.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="569158da68f6b4828bf7797c19da5124" Selector="&lt;ctrl name='Keyword  Last Name' role='editable text' /&gt;&lt;nav up='1' /&gt;&lt;ctrl name='Keyword  Last Name' role='editable text' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:TypeInto.Target>
-            </ui:TypeInto>
-            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into 'First Name" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_9" Text="[in_FirstName]">
-              <ui:TypeInto.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="b142c86d2a1b28481215259d7616a48b" Selector="&lt;ctrl name='Keyword  First Name' role='editable text' /&gt;&lt;nav up='1' /&gt;&lt;ctrl name='Keyword  First Name' role='editable text' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:TypeInto.Target>
-            </ui:TypeInto>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Clicking On Import&quot;]" />
-            <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'Import" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_6" KeyModifiers="None" MouseButton="BTN_LEFT">
-              <ui:Click.CursorPosition>
-                <ui:CursorPosition Position="Center">
-                  <ui:CursorPosition.OffsetX>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetX>
-                  <ui:CursorPosition.OffsetY>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:CursorPosition.OffsetY>
-                </ui:CursorPosition>
-              </ui:Click.CursorPosition>
-              <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="c0ca0ca5f77782ecfea7c8a71503aab2" Selector="&lt;wnd ctrlid='1' title='&amp;amp;Import' aaname='Import' /&gt;">
-                  <ui:Target.TimeoutMS>
-                    <InArgument x:TypeArguments="x:Int32" />
-                  </ui:Target.TimeoutMS>
-                  <ui:Target.WaitForReady>
-                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                  </ui:Target.WaitForReady>
-                </ui:Target>
-              </ui:Click.Target>
-            </ui:Click>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;nautilus Process Completed&quot;]" />
-          </Sequence>
-        </ActivityAction>
-      </ui:WindowScope.Body>
-    </ui:WindowScope>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Error" Message="[exception.Message]" />
+              <Throw Exception="[New ApplicationException(&quot;Import Files to Nautilus;&quot;+in_Sqlid)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_3" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
   </Sequence>
 </Activity>
